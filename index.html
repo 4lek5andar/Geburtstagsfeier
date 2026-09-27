@@ -151,6 +151,13 @@
   }
   .station:nth-child(2) .karte{border-left-color:var(--rose)}
   .station:nth-child(3) .karte{border-left-color:var(--gold)}
+  .karte-ausgebucht{border-left-color:var(--tinte-soft)!important;opacity:.85}
+  .karte-ausgebucht h3{color:var(--tinte-soft)}
+  .ausgebucht-banner{
+    display:inline-block;background:var(--puder);color:var(--rose-dunkel);
+    font-weight:700;font-size:13.5px;letter-spacing:.02em;
+    padding:6px 14px;border-radius:999px;margin-bottom:14px;
+  }
   .karte h3{font-family:'Fraunces',serif;font-weight:560;font-size:23px;margin-bottom:6px}
   .karte p{color:var(--tinte-soft);font-size:16px}
   .karte .ort{
@@ -246,6 +253,36 @@
     html{scroll-behavior:auto}
   }
 
+  /* ---------- Update-Banner ---------- */
+  .update-banner{
+    position:relative;
+    background:linear-gradient(90deg,#F6EBDD,#F4E1E3);
+    border-bottom:1.5px solid var(--gold);
+    padding:14px 24px;
+    text-align:center;
+    font-size:15px;
+    color:var(--tinte);
+  }
+  .update-banner b{
+    color:var(--rose-dunkel);
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    margin-right:6px;
+  }
+  .update-banner .schliessen{
+    position:absolute;right:14px;top:50%;transform:translateY(-50%);
+    background:none;border:none;cursor:pointer;
+    font-size:20px;line-height:1;color:var(--tinte-soft);
+    padding:4px 8px;border-radius:8px;
+  }
+  .update-banner .schliessen:hover{background:rgba(53,38,46,.08)}
+  .update-banner .schliessen:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  @media (max-width:600px){
+    .update-banner{padding:14px 44px 14px 16px;font-size:14px}
+    .update-banner .schliessen{right:8px}
+  }
+
   /* ---------- Kennwort-Gate ---------- */
   #gate{
     position:fixed;inset:0;z-index:100;
@@ -283,6 +320,10 @@
 </div>
 
 <div id="inhalt">
+<div class="update-banner" id="updateBanner">
+  <b>Achtung: Update</b>Das Fr&uuml;hst&uuml;ck am Sonntag findet nicht mehr im Zimt &amp; Zucker statt, sondern im <strong>Fritz Stuttgart</strong> (Nadlerstr. 4) &ndash; alle anderen Infos bleiben gleich.
+  <button class="schliessen" id="bannerSchliessen" aria-label="Hinweis schlie&szlig;en">&times;</button>
+</div>
 <header class="hero">
   <div class="wrap">
     <span class="eyebrow">Save the Date · Solveig &amp; Aleks</span>
@@ -316,7 +357,8 @@
     <div class="programm">
       <div class="station">
         <div class="uhr"><small>Sa &middot; Nachmittag</small>ab 14&nbsp;Uhr</div>
-        <div class="karte">
+        <div class="karte karte-ausgebucht">
+          <div class="ausgebucht-banner">Ausgebucht &ndash; bei uns zu Hause ist leider kein Platz mehr</div>
           <h3>Kaffee &amp; Kuchen bei uns zu Hause</h3>
           <p>Wer schon fr&uuml;her da ist, kommt gem&uuml;tlich auf Kaffee und Kuchen vorbei &ndash; ganz entspannt, bevor es abends losgeht.</p>
           <span class="ort">Bei Solveig &amp; Aleks zu Hause</span>
@@ -335,7 +377,7 @@
         <div class="karte">
           <h3>Gemeinsames Fr&uuml;hst&uuml;ck am n&auml;chsten Morgen</h3>
           <p>Zum Ausklang haben wir einen Tisch f&uuml;r uns reserviert &ndash; jeder zahlt selbst, gefr&uuml;hst&uuml;ckt wird zusammen.</p>
-          <a class="ort" href="https://www.google.com/maps/search/?api=1&amp;query=Zimt%20%26%20Zucker%20by%20Kata%20Stuttgart&amp;query_place_id=ChIJzQq7sE3bmUcRW-zvPv-RrFk" target="_blank" rel="noopener">Zimt &amp; Zucker &middot; Wei&szlig;enburgstr. 2C, Stuttgart &nearr;</a>
+          <a class="ort" href="https://www.google.com/maps/place/Fritz+Stuttgart/@48.7743046,9.1742133,17z/data=!3m1!4b1!4m6!3m5!1s0x4799dbdc95ed22fb:0x27dfe13aeda814ab!8m2!3d48.7743046!4d9.1767882" target="_blank" rel="noopener">Fritz Stuttgart &middot; Nadlerstr. 4, Stuttgart &nearr;</a>
         </div>
       </div>
     </div>
@@ -364,10 +406,10 @@
         <legend>Wobei seid ihr dabei?</legend>
         <p class="legend-hint">Mehrfachauswahl m&ouml;glich &ndash; gern auch alle drei.</p>
         <div class="optionen" id="optionen">
-          <label class="opt" data-teil>
-            <input type="checkbox" name="teilnahme" value="kaffee">
+          <label class="opt gesperrt">
+            <input type="checkbox" name="teilnahme" value="kaffee" disabled>
             <span class="box"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
-            <span class="opt-text"><b>Kaffee &amp; Kuchen</b><span>Samstag ab 14 Uhr &middot; bei uns zu Hause</span></span>
+            <span class="opt-text"><b>Kaffee &amp; Kuchen</b><span>Ausgebucht &ndash; Samstag ab 14 Uhr &middot; bei uns zu Hause</span></span>
             <span class="kennung">A</span>
           </label>
           <label class="opt" data-teil>
@@ -379,7 +421,7 @@
           <label class="opt" data-teil>
             <input type="checkbox" name="teilnahme" value="fruehstueck">
             <span class="box"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
-            <span class="opt-text"><b>Fr&uuml;hst&uuml;ck</b><span>Sonntag ab 10 Uhr &middot; Zimt &amp; Zucker (Selbstzahler)</span></span>
+            <span class="opt-text"><b>Fr&uuml;hst&uuml;ck</b><span>Sonntag ab 10 Uhr &middot; Fritz Stuttgart (Selbstzahler)</span></span>
             <span class="kennung">C</span>
           </label>
           <label class="opt absage" id="optAbsage">
@@ -455,6 +497,20 @@
 
   if (sessionStorage.getItem('gateOk') === 'ja'){
     gateOeffnen();
+  }
+
+  // ---------- Update-Banner ----------
+  const updateBanner = document.getElementById('updateBanner');
+  const bannerSchliessen = document.getElementById('bannerSchliessen');
+  const BANNER_KEY = 'bannerFruehstueckOrtGesehen';
+  if (updateBanner){
+    if (localStorage.getItem(BANNER_KEY) === 'ja'){
+      updateBanner.style.display = 'none';
+    }
+    bannerSchliessen.addEventListener('click', function(){
+      updateBanner.style.display = 'none';
+      try { localStorage.setItem(BANNER_KEY, 'ja'); } catch(e){}
+    });
   }
 
   gateForm.addEventListener('submit', function(e){
